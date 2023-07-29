@@ -8,14 +8,14 @@ async function importModuleRoutes() {
       path: '/',
       name: 'Home',
       component: () => import('./modules/tasks/views/TaskList.vue'),
-    }
+      meta: { breadcrumb: {title: 'Home', to: '/'} },
+    },
   ];
 
-  const modules = import.meta.globEager('./modules/*/router/index.js');
+  const modules = Object.entries(import.meta.globEager('./modules/*/router/index.js'));
 
-  for (const path in modules) {
-    const moduleRoutes = modules[path].default;
-    routes.push(...moduleRoutes);
+  for (const [path, moduleRoutes] of modules) {
+    routes.push.apply(routes, moduleRoutes.default);
   }
 
   return routes;

@@ -1,0 +1,35 @@
+<template>
+  <v-breadcrumbs class="v-breadcrumbs--density-default" separator="/" v-if="items.length">
+    <template v-for="(item, index) in items" :key="index">
+      <li v-if="item.href" class="v-breadcrumbs__item">
+        <router-link
+          v-if="item.href"
+          :to="item.href"
+          class="v-breadcrumbs__item--link"
+          :class="{ 'router-link-active': index === items.length - 1 }"
+          exact
+        >
+          {{ item.title }}
+        </router-link>
+        <i v-if="index < items.length - 1" class="mdi mdi-chevron-right v-icon notranslate v-theme--light v-icon--size-default"></i>
+      </li>
+      <li v-else class="v-breadcrumbs__item">{{ item.title }}</li>
+    </template>
+  </v-breadcrumbs>
+</template>
+
+<script>
+export default {
+  props: {
+    items: {
+      type: Array,
+      required: true,
+    },
+  },
+};
+</script>
+
+<style>
+/* Add any additional custom styling for breadcrumbs here */
+</style>
+
